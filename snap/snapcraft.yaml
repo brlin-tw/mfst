@@ -21,11 +21,22 @@ apps:
   mfst:
     command: bin/mfst-wrapper.sh
     plugs:
+      # Required to access raw disk block devices (e.g. /dev/sdX, /dev/mmcblkX) for stress testing
       - block-devices
+
+      # Required for hardware introspection and querying device attributes under /sys via libudev
       - hardware-observe
+
+      # Required to issue USBDEVFS_RESET ioctls to reset USB flash media on communication failures
       - raw-usb
+
+      # Required for remote MySQL/MariaDB database reporting (--dbhost)
       - network
+
+      # Required to access lock, log, or stats files located under user's home directory
       - home
+
+      # Required to access log or stats files on removable media mount paths (/media, /run/media, /mnt)
       - removable-media
 
 parts:
