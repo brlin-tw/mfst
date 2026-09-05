@@ -19,7 +19,7 @@ confinement: strict
 
 apps:
   mfst:
-    command: usr/bin/mfst
+    command: bin/mfst-wrapper.sh
     plugs:
       - block-devices
       - hardware-observe
@@ -38,6 +38,7 @@ parts:
       # Workaround mikaey/mfst#5
       autoreconf -fi
       craftctl default
+      install -D -m 0755 snap/local/mfst-wrapper.sh "$CRAFT_PART_INSTALL/bin/mfst-wrapper.sh"
     build-packages:
       - autoconf
       - automake
