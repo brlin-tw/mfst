@@ -5,6 +5,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 set -eu
 
+if ! snapctl is-connected block-devices; then
+    printf \
+        'Error: The "block-devices" plug must be connected for mfst to access block devices.\n' \
+        1>&2
+    printf \
+        'Please run: sudo snap connect %s:block-devices\n' \
+        "${SNAP_NAME:-mfst}" \
+        1>&2
+    exit 1
+fi
+
 has_lockfile=false
 for arg in "${@}"; do
     case "${arg}" in
