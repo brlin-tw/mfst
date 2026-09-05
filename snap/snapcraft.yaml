@@ -30,15 +30,15 @@ apps:
 
 parts:
   mfst:
-    plugin: autotools
     source: .
+    plugin: autotools
     autotools-configure-parameters:
       - --prefix=/usr
     override-build: |
       # Workaround mikaey/mfst#5
       autoreconf -fi
       craftctl default
-      install -D -m 0755 snap/local/mfst-wrapper.sh "$CRAFT_PART_INSTALL/bin/mfst-wrapper.sh"
+      install -D -m 0755 snap/local/mfst-wrapper.sh "${CRAFT_PART_INSTALL}/bin/mfst-wrapper.sh"
     build-packages:
       - autoconf
       - automake
