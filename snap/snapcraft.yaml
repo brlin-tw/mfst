@@ -34,9 +34,14 @@ parts:
     source: .
     autotools-configure-parameters:
       - --prefix=/usr
+    override-build: |
+      # Workaround mikaey/mfst#5
+      autoreconf -fi
+      craftctl default
     build-packages:
       - autoconf
       - automake
+      - libtool
       - pkg-config
       - uuid-dev
       - libudev-dev
