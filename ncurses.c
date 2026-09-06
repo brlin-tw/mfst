@@ -437,7 +437,7 @@ void redraw_sector_map(device_testing_context_type *device_testing_context) {
     sector_display.sectors_per_block = device_testing_context->device_info.num_physical_sectors / sector_display.num_blocks;
     sector_display.sectors_in_last_block = device_testing_context->device_info.num_physical_sectors % sector_display.num_blocks + sector_display.sectors_per_block;
 
-    mvprintw(BLOCK_SIZE_DISPLAY_Y, BLOCK_SIZE_DISPLAY_X, "%'lu bytes", sector_display.sectors_per_block * device_testing_context->device_info.sector_size);
+    mvprintw(BLOCK_SIZE_DISPLAY_Y, BLOCK_SIZE_DISPLAY_X, "%'" PRIu64 " bytes", sector_display.sectors_per_block * device_testing_context->device_info.sector_size);
 
     if(!device_testing_context->endurance_test_info.sector_map) {
         return;
@@ -708,7 +708,7 @@ void redraw_screen(device_testing_context_type *device_testing_context) {
         mvaddstr(FAILED_BLOCK_LABEL_Y  , FAILED_BLOCK_LABEL_X  , "= Failed/this round"         );
 
         if(device_testing_context->endurance_test_info.test_started) {
-            j = snprintf(msg_buffer, sizeof(msg_buffer), " Round %'lu ", device_testing_context->endurance_test_info.rounds_completed + 1);
+            j = snprintf(msg_buffer, sizeof(msg_buffer), " Round %'" PRIu64 " ", device_testing_context->endurance_test_info.rounds_completed + 1);
             mvaddstr(ROUNDNUM_DISPLAY_Y, ROUNDNUM_DISPLAY_X(j), msg_buffer);
         }
 
@@ -720,13 +720,13 @@ void redraw_screen(device_testing_context_type *device_testing_context) {
 
         // Draw the reported size of the device if it's been determined
         if(device_testing_context->device_info.logical_size) {
-            snprintf(msg_buffer, 26, "%'lu bytes", device_testing_context->device_info.logical_size);
+            snprintf(msg_buffer, 26, "%'" PRIu64 " bytes", device_testing_context->device_info.logical_size);
             mvprintw(REPORTED_DEVICE_SIZE_DISPLAY_Y, REPORTED_DEVICE_SIZE_DISPLAY_X, "%-25s", msg_buffer);
         }
 
         // Draw the detected size of the device if it's been determined
         if(device_testing_context->device_info.physical_size) {
-            snprintf(msg_buffer, 26, "%'lu bytes", device_testing_context->device_info.physical_size);
+            snprintf(msg_buffer, 26, "%'" PRIu64 " bytes", device_testing_context->device_info.physical_size);
             mvprintw(DETECTED_DEVICE_SIZE_DISPLAY_Y, DETECTED_DEVICE_SIZE_DISPLAY_X, "%-25s", msg_buffer);
         }
 
@@ -737,7 +737,7 @@ void redraw_screen(device_testing_context_type *device_testing_context) {
         }
 
         if(sector_display.sectors_per_block) {
-            mvprintw(BLOCK_SIZE_DISPLAY_Y, BLOCK_SIZE_DISPLAY_X, "%'lu bytes", sector_display.sectors_per_block * device_testing_context->device_info.sector_size);
+            mvprintw(BLOCK_SIZE_DISPLAY_Y, BLOCK_SIZE_DISPLAY_X, "%'" PRIu64 " bytes", sector_display.sectors_per_block * device_testing_context->device_info.sector_size);
         }
 
         if(device_testing_context->performance_test_info.sequential_read_speed) {

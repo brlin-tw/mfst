@@ -162,7 +162,7 @@ void stats_log(device_testing_context_type *device_testing_context) {
         (((double)timediff(device_testing_context->endurance_test_info.stats_file_counters.last_update_time, micronow)) / 60000000);
 
     fprintf(device_testing_context->endurance_test_info.stats_file_handle,
-            "%s,%lu,%lu,%lu,%0.2f,%lu,%lu,%0.2f,%lu,%lu,%0.2f\n",
+            "%s,%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%0.2f,%" PRIu64 ",%" PRIu64 ",%0.2f,%" PRIu64 ",%" PRIu64 ",%0.2f\n",
             ctime_str,
             device_testing_context->endurance_test_info.rounds_completed,
             total_bytes_written - device_testing_context->endurance_test_info.stats_file_counters.last_bytes_written,
@@ -905,12 +905,12 @@ void print_device_summary(device_testing_context_type *device_testing_context, i
 
     snprintf(messages[0], sizeof(messages[0]), "Reason for aborting test             : %s", abort_reason > 5 ? abort_reasons[0] : abort_reasons[abort_reason]);
     out_messages[0] = messages[0];
-    snprintf(messages[1], sizeof(messages[1]), "Number of read/write cycles completed: %'lu", device_testing_context->endurance_test_info.rounds_completed);
+    snprintf(messages[1], sizeof(messages[1]), "Number of read/write cycles completed: %'" PRIu64, device_testing_context->endurance_test_info.rounds_completed);
     out_messages[1] = messages[1];
 
     if(device_testing_context->endurance_test_info.rounds_to_first_error != -1ULL) {
         log_log(device_testing_context, NULL, SEVERITY_LEVEL_INFO, MSG_ENDURANCE_TEST_ROUNDS_TO_FIRST_FAILURE, device_testing_context->endurance_test_info.rounds_to_first_error);
-        snprintf(messages[2], sizeof(messages[2]), "Read/write cycles to first failure   : %'lu", device_testing_context->endurance_test_info.rounds_to_first_error);
+        snprintf(messages[2], sizeof(messages[2]), "Read/write cycles to first failure   : %'" PRIu64, device_testing_context->endurance_test_info.rounds_to_first_error);
         out_messages[2] = messages[2];
     } else {
         out_messages[2] = NULL;
@@ -918,7 +918,7 @@ void print_device_summary(device_testing_context_type *device_testing_context, i
 
     if(device_testing_context->endurance_test_info.rounds_to_0_1_threshold != -1ULL) {
         log_log(device_testing_context, NULL, SEVERITY_LEVEL_INFO, MSG_ENDURANCE_TEST_ROUNDS_TO_0_1_PERCENT_FAILURE, device_testing_context->endurance_test_info.rounds_to_0_1_threshold);
-        snprintf(messages[3], sizeof(messages[3]), "Read/write cycles to 0.1%% failure    : %'lu", device_testing_context->endurance_test_info.rounds_to_0_1_threshold);
+        snprintf(messages[3], sizeof(messages[3]), "Read/write cycles to 0.1%% failure    : %'" PRIu64, device_testing_context->endurance_test_info.rounds_to_0_1_threshold);
         out_messages[3] = messages[3];
     } else {
         out_messages[3] = NULL;
@@ -926,7 +926,7 @@ void print_device_summary(device_testing_context_type *device_testing_context, i
 
     if(device_testing_context->endurance_test_info.rounds_to_1_threshold != -1ULL) {
         log_log(device_testing_context, NULL, SEVERITY_LEVEL_INFO, MSG_ENDURANCE_TEST_ROUNDS_TO_1_PERCENT_FAILURE, device_testing_context->endurance_test_info.rounds_to_1_threshold);
-        snprintf(messages[4], sizeof(messages[4]), "Read/write cycles to 1%% failure      : %'lu", device_testing_context->endurance_test_info.rounds_to_1_threshold);
+        snprintf(messages[4], sizeof(messages[4]), "Read/write cycles to 1%% failure      : %'" PRIu64, device_testing_context->endurance_test_info.rounds_to_1_threshold);
         out_messages[4] = messages[4];
     } else {
         out_messages[4] = NULL;
@@ -934,7 +934,7 @@ void print_device_summary(device_testing_context_type *device_testing_context, i
 
     if(device_testing_context->endurance_test_info.rounds_to_10_threshold != -1ULL) {
         log_log(device_testing_context, NULL, SEVERITY_LEVEL_INFO, MSG_ENDURANCE_TEST_ROUNDS_TO_10_PERCENT_FAILURE, device_testing_context->endurance_test_info.rounds_to_10_threshold);
-        snprintf(messages[5], sizeof(messages[3]), "Read/write cycles to 10%% failure     : %'lu", device_testing_context->endurance_test_info.rounds_to_10_threshold);
+        snprintf(messages[5], sizeof(messages[3]), "Read/write cycles to 10%% failure     : %'" PRIu64, device_testing_context->endurance_test_info.rounds_to_10_threshold);
         out_messages[5] = messages[5];
     } else {
         out_messages[5] = NULL;
@@ -942,7 +942,7 @@ void print_device_summary(device_testing_context_type *device_testing_context, i
 
     if(device_testing_context->endurance_test_info.rounds_to_25_threshold != -1ULL) {
         log_log(device_testing_context, NULL, SEVERITY_LEVEL_INFO, MSG_ENDURANCE_TEST_ROUNDS_TO_25_PERCENT_FAILURE, device_testing_context->endurance_test_info.rounds_to_25_threshold);
-        snprintf(messages[6], sizeof(messages[6]), "Read/write cycles to 25%% failure     : %'lu", device_testing_context->endurance_test_info.rounds_to_25_threshold);
+        snprintf(messages[6], sizeof(messages[6]), "Read/write cycles to 25%% failure     : %'" PRIu64, device_testing_context->endurance_test_info.rounds_to_25_threshold);
         out_messages[6] = messages[6];
     } else {
         out_messages[6] = NULL;
@@ -950,7 +950,7 @@ void print_device_summary(device_testing_context_type *device_testing_context, i
 
     if(abort_reason == ABORT_REASON_FIFTY_PERCENT_FAILURE) {
         log_log(device_testing_context, NULL, SEVERITY_LEVEL_INFO, MSG_ENDURANCE_TEST_ROUNDS_TO_50_PERCENT_FAILURE, device_testing_context->endurance_test_info.rounds_completed - 1);
-        snprintf(messages[7], sizeof(messages[5]), "Read/write cycles to 50%% failure     : %'lu", device_testing_context->endurance_test_info.rounds_completed - 1);
+        snprintf(messages[7], sizeof(messages[5]), "Read/write cycles to 50%% failure     : %'" PRIu64, device_testing_context->endurance_test_info.rounds_completed - 1);
         out_messages[7] = messages[7];
     } else {
         out_messages[7] = NULL;
@@ -2901,7 +2901,7 @@ int probe_device_info(device_testing_context_type *device_testing_context) {
     log_log(device_testing_context, NULL, SEVERITY_LEVEL_INFO, MSG_DEVICE_INFO_PREFERRED_BLOCK_SIZE, fs.st_blksize);
     log_log(device_testing_context, NULL, SEVERITY_LEVEL_INFO, MSG_DEVICE_INFO_MAX_SECTORS_PER_REQUEST, device_testing_context->device_info.max_sectors_per_request);
 
-    mvprintw(REPORTED_DEVICE_SIZE_DISPLAY_Y, REPORTED_DEVICE_SIZE_DISPLAY_X, "%'lu bytes", device_testing_context->device_info.logical_size);
+    mvprintw(REPORTED_DEVICE_SIZE_DISPLAY_Y, REPORTED_DEVICE_SIZE_DISPLAY_X, "%'" PRIu64 " bytes", device_testing_context->device_info.logical_size);
     refresh();
 
     return 0;
@@ -3335,7 +3335,7 @@ int main(int argc, char **argv) {
             }
 
             if(!program_options.no_curses) {
-                mvprintw(DETECTED_DEVICE_SIZE_DISPLAY_Y, DETECTED_DEVICE_SIZE_DISPLAY_X, "%'lu bytes", device_testing_context->device_info.physical_size);
+                mvprintw(DETECTED_DEVICE_SIZE_DISPLAY_Y, DETECTED_DEVICE_SIZE_DISPLAY_X, "%'" PRIu64 " bytes", device_testing_context->device_info.physical_size);
                 if(device_testing_context->device_info.physical_size != device_testing_context->device_info.logical_size) {
                     attron(COLOR_PAIR(RED_ON_BLACK));
                     mvprintw(IS_FAKE_FLASH_DISPLAY_Y, IS_FAKE_FLASH_DISPLAY_X, "Yes");
@@ -3361,7 +3361,7 @@ int main(int argc, char **argv) {
             device_testing_context->device_info.is_fake_flash = device_testing_context->capacity_test_info.is_fake_flash;
 
             if(!program_options.no_curses) {
-                mvprintw(DETECTED_DEVICE_SIZE_DISPLAY_Y, DETECTED_DEVICE_SIZE_DISPLAY_X, "%'lu bytes", device_testing_context->device_info.physical_size);
+                mvprintw(DETECTED_DEVICE_SIZE_DISPLAY_Y, DETECTED_DEVICE_SIZE_DISPLAY_X, "%'" PRIu64 " bytes", device_testing_context->device_info.physical_size);
                 if(device_testing_context->device_info.physical_size != device_testing_context->device_info.logical_size) {
                     attron(COLOR_PAIR(RED_ON_BLACK));
                     mvprintw(IS_FAKE_FLASH_DISPLAY_Y, IS_FAKE_FLASH_DISPLAY_X, "Yes");
@@ -3573,7 +3573,7 @@ int main(int argc, char **argv) {
 
         device_testing_context->endurance_test_info.current_phase = CURRENT_PHASE_WRITING;
         if(!program_options.no_curses) {
-            j = snprintf(msg_buffer, sizeof(msg_buffer), " Round %'lu ", device_testing_context->endurance_test_info.rounds_completed + 1);
+            j = snprintf(msg_buffer, sizeof(msg_buffer), " Round %'" PRIu64 " ", device_testing_context->endurance_test_info.rounds_completed + 1);
             mvaddstr(ROUNDNUM_DISPLAY_Y, ROUNDNUM_DISPLAY_X(j), msg_buffer);
             mvaddstr(READWRITE_DISPLAY_Y, READWRITE_DISPLAY_X, " Writing ");
         }
